@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { AuthContext } from "./context/auth-context";
+import RequireAuth from "./components/require-auth/RequireAuth";
+import SignIn from "./pages/SignIn/SignIn";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import AddCigar from "./pages/AddCigar/AddCigar";
 
 function App() {
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // Check if currentUser exists on initial render
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  }, [currentUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      {/* <Route path="/signup" element={<SignUp />} /> */}
+      <Route
+        index
+        element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        }
+      >
+        <Route
+          path="AddCigar"
+          element={
+            <RequireAuth>
+              <AddCigar />
+            </RequireAuth>
+          }
+        />
+      </Route>
+      <Route path="/signin" element={<SignIn />} />
+    </Routes>
   );
 }
 
