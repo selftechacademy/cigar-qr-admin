@@ -23,12 +23,13 @@ export default function SignIn() {
       //console.log("user signed in", userCredentials);
       if (userCredentials) {
         //set The email address as auth context
-        navigate("/dashboard");
+        navigate("/");
       }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      enqueueSnackbar("Sth went wrong, please try again", { variant: "error" });
+      // enqueueSnackbar("Sth went wrong, please try again", { variant: "error" });
+      alert("enter correct info");
       console.log("error", err);
     }
   };

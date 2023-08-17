@@ -8,9 +8,9 @@ function RequireAuth({ children }) {
   console.log("current User", currentUser);
   let location = useLocation();
 
-  if (!currentUser) {
+  if (!currentUser.email) {
     // Redirect the user to the home page.
-    return <Navigate to="/signin" />;
+    return <Navigate to="/signin" replace />;
   }
 
   return children;

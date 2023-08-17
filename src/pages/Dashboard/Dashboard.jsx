@@ -35,7 +35,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/auth-context";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: "/", icon: HomeIcon, current: true },
   {
     name: "Add cigar",
     href: "addcigar",
@@ -391,6 +391,7 @@ export default function Dashboard() {
             <div className="px-4 sm:px-6 lg:px-8">
               {/* Your content */}
               <Outlet />
+              <p>HOW HOW HOW</p>
             </div>
           </main>
         </div>
