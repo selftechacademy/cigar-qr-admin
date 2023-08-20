@@ -30,7 +30,7 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 //we are getting access to images in storage
-const storage = getStorage(app);
+export const storage = getStorage(app);
 
 //auth
 export const auth = getAuth(app);

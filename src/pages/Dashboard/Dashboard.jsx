@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
@@ -391,7 +377,6 @@ export default function Dashboard() {
             <div className="px-4 sm:px-6 lg:px-8">
               {/* Your content */}
               <Outlet />
-              <p>HOW HOW HOW</p>
             </div>
           </main>
         </div>
