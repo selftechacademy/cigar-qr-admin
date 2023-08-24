@@ -1,15 +1,27 @@
 import React from "react";
 
 const brandNames = ["", "Rocky Patel"];
-const cigarNames = ["", "Rocky Patel Sixty"];
-const shapeGroupNames = ["", "Torpedo"];
-const shapeNames = ["", "Short Torpedo"];
-const sizeNames = ["", "Corona"];
-const lengthOptions = ["", "4.6", "7"];
-const thicknessOptions = ["", "60", "70"];
-const colorOptions = ["", "maduro"];
+const cigarNames = ["", "Rocky Patel Sixty", "White Label"];
+const shapeGroupNames = [
+  "",
+  "Parejo (rounded)",
+  "Box Pressed",
+  "Culebra",
+  "Torpedo",
+  "Belicoso",
+  "Piramide",
+  "Perfecto",
+  "Chisel",
+];
+// const shapeNames = ["", "Short Torpedo"];
+// const sizeNames = ["", "Corona"];
+// const lengthOptions = ["", "4.6", "7"];
+// const thicknessOptions = ["", "60", "70"];
+// const colorOptions = ["", "maduro"];
+const wrapperOptions = ["", "connecticut"];
+const binderOptions = ["", "Nicaraguan"];
 const strengthOptions = ["", "medium", "medium-full", "mild to medium"];
-const flavorOptions = ["", "wood", "ground"];
+// const flavorOptions = ["", "wood", "ground"];
 const timeToSmokeOptions = [
   "",
   15,
@@ -27,7 +39,11 @@ const timeToSmokeOptions = [
   165,
   180,
 ];
-const productionYearOptions = ["", 1990, 2000, 2020, 2021, 2022, 2023];
+const productionYearOptions = [
+  "",
+  ...getYears(1995, Number(new Date().getFullYear())),
+];
+const agedYearsOptions = ["", ...getYears(1, 15)];
 
 const selectOptions = [
   {
@@ -39,21 +55,30 @@ const selectOptions = [
     inputName: "shapeGroupName",
     options: shapeGroupNames,
   },
-  { inputName: "shapeName", options: shapeNames },
-  { inputName: "sizeName", options: sizeNames },
-  { inputName: "length", options: lengthOptions },
-  { inputName: "thickness", options: thicknessOptions },
-  { inputName: "color", options: colorOptions },
+  // { inputName: "shapeName", options: shapeNames },
+  // { inputName: "sizeName", options: sizeNames },
+  // { inputName: "length", options: lengthOptions },
+  // { inputName: "thickness", options: thicknessOptions },
+  { inputName: "wrapper", options: wrapperOptions },
   { inputName: "strength", options: strengthOptions },
-  { inputName: "flavors", options: flavorOptions },
+  // { inputName: "flavors", options: flavorOptions },
   { inputName: "timeToSmoke", options: timeToSmokeOptions },
   { inputName: "productionYear", options: productionYearOptions },
+  { inputName: "agedYears", options: agedYearsOptions },
 ];
+
+function getYears(startYear, endYear) {
+  const years = [];
+  for (let i = startYear; i <= endYear; i++) {
+    years.push(i);
+  }
+  return years;
+}
 
 const RenderSelectOptions = ({ onValueChangeHandler }) => {
   const renderOptions = (arrayInput = []) => {
-    return arrayInput.map((el) => (
-      <option value={el} key={el}>
+    return arrayInput.map((el, index) => (
+      <option value={el} key={index}>
         {el}
       </option>
     ));

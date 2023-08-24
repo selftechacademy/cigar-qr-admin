@@ -2,25 +2,27 @@ import { useState, useEffect } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { storage } from "../../firebase-config";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { enqueueSnackbar } from "notistack";
 import { db } from "../../firebase-config";
 import { collection, addDoc } from "firebase/firestore/lite";
 import RenderSelectOptions from "./RenderSelectOptions";
 import QrCreator from "./QrCreator";
-import { enqueueSnackbar } from "notistack";
+import RenderMultiSelect from "./RenderMultiSelect";
+import { sizeOptions, fillerOptions, flavorOptions } from "./optionsList";
 
 const defaultFormData = {
   brand: "",
   cigarName: "",
   shapeGroupName: "",
-  shapeName: "",
-  sizeName: "",
-  length: 0,
-  thickness: 0,
-  color: "",
+  sizeList: "",
+  fillerList: "",
+  binder: "",
+  wrapper: "",
   strength: "",
-  flavors: [],
+  flavorList: [],
   timeToSmoke: "",
   productionYear: "",
+  agedYears: 0,
   description: "",
   imageUrls: [],
   videoUrl: "",
@@ -84,6 +86,11 @@ export default function AddCigar() {
 
   const onValueChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("form data", formData);
+  };
+
+  const onMultiSelectionChangeHandler = (e, name) => {
+    setFormData({ ...formData, [name]: e.map((el) => el.value) });
   };
 
   const onSubmitHandler = async (e) => {
@@ -126,6 +133,28 @@ export default function AddCigar() {
                   <RenderSelectOptions
                     onValueChangeHandler={onValueChangeHandler}
                   />
+
+                  <div className="col-span-full">
+                    <RenderMultiSelect
+                      onValueChangeHandler={onMultiSelectionChangeHandler}
+                      label="fillerList"
+                      options={fillerOptions}
+                    />
+                  </div>
+                  <div className="col-span-full">
+                    <RenderMultiSelect
+                      onValueChangeHandler={onMultiSelectionChangeHandler}
+                      label="sizeList"
+                      options={sizeOptions}
+                    />
+                  </div>
+                  <div className="col-span-full">
+                    <RenderMultiSelect
+                      onValueChangeHandler={onMultiSelectionChangeHandler}
+                      label="flavorList"
+                      options={flavorOptions}
+                    />
+                  </div>
 
                   {/* TILL HERE */}
 
@@ -246,7 +275,11 @@ export default function AddCigar() {
         </div>
       ) : (
         <div>
-          <QrCreator brand={formData.brand} cigarId={cigarId} />
+          <QrCreator
+            brand={formData.brand}
+            cigarId={cigarId}
+            cigarName={formData.cigarName}
+          />
         </div>
       )}
     </>
