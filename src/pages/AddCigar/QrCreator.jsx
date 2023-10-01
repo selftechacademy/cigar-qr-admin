@@ -16,7 +16,12 @@ const qrCode = new QRCodeStyling({
   },
 });
 
-export default function QrCreator({ brand, cigarId, cigarName }) {
+export default function QrCreator({
+  brand,
+  cigarId,
+  cigarName,
+  uploadQrImage,
+}) {
   // const [url, setUrl] = useState("https://cigarqr.com");
   const url = `www.cigarqr.com?brand=${brand.replace(
     " ",
@@ -24,6 +29,11 @@ export default function QrCreator({ brand, cigarId, cigarName }) {
   )}&cigarId=${cigarId}`;
   const [fileExt, setFileExt] = useState("png");
   const ref = useRef(null);
+
+  const onGetRowData = async () => {
+    const data = await qrCode.getRawData("png");
+    uploadQrImage(data);
+  };
 
   useEffect(() => {
     qrCode.append(ref.current);
@@ -33,6 +43,7 @@ export default function QrCreator({ brand, cigarId, cigarName }) {
     qrCode.update({
       data: url,
     });
+    onGetRowData();
   }, [url]);
 
   const onUrlChange = (event) => {

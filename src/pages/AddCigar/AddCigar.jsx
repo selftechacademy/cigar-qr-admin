@@ -44,13 +44,25 @@ export default function AddCigar() {
     setImageURLs(newImageUrls);
   }, [images]);
 
+  const uploadQrImage = async (image) => {
+    const storageRef = ref(
+      storage,
+      `${formData.brand}/${formData.cigarName}/${formData.cigarName}-qr`
+    );
+    try {
+      const response = await uploadBytesResumable(storageRef, image);
+      console.log("response", response);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
   const uploadImageToFirebase = (image) => {
     const storageRef = ref(
       storage,
       `${formData.brand}/${formData.cigarName}/${image.name}`
     );
     const uploadTask = uploadBytesResumable(storageRef, image);
-
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -279,6 +291,7 @@ export default function AddCigar() {
             brand={formData.brand}
             cigarId={cigarId}
             cigarName={formData.cigarName}
+            uploadQrImage={uploadQrImage}
           />
         </div>
       )}
